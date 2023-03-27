@@ -1,0 +1,81 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+  <div class="container">
+    <div class="row">
+      <div class="col-md-12">
+        <h3>Daftar Dosen
+          <a href="{% url 'jadwal' %}" class="btn btn-danger">back</a>
+          <a href="{% url 'tambah_dosen' %}" class="btn btn-primary">Tambah</a>
+        </h3>
+          {% for message in messages %}
+            {% if message %}
+              <div class="alert alert-success">{{ message }}</div>
+            {% endif %}
+          {% endfor %}
+        <table class="table table-bordered table-striped">
+          
+          <thead>
+            <tr>
+              <th>NIP</th>
+              <th>Nama</th>
+              <th>Notelp</th>
+              <th>E-mail</th>
+              <th>Action</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for dosen in dsn %}
+            <tr>
+              <td><a href="{% url 'ubah_dosen' dosen.id %}">{{dosen.nip}}</a></td>
+              <td>{{dosen.nama}}</td>
+              <td>{{dosen.notelp}}</td>
+              <td>{{dosen.mail}}</td>
+              <td><button data-toggle="modal" data-target="#hapus-{{ dosen.id }}">Hapus</button></td>
+              <div class="modal" id="hapus-{{ dosen.id }}">
+                <div class="modal-dialog">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <div class="modal-title">
+                        <h3>Hapus</h3>
+                      </div>
+                    </div>
+                    <div class="modal-body">
+                      Apakah anda yakin akan menghapus data dosen<strong>{{ dosen.nama }}</strong> dengan NIP <strong>{{ dosen.nip }}</strong> ?
+                    </div>
+                    <div class="modal-footer">
+                      <a href="{% url 'hapus_dosen' dosen.id %}" class="btn btn-danger">Hapus</a>
+                      <button class="btn btn-dark" data-dismiss="modal">Tidak</button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+        <div class="container mt-5 mb-5">
+          <div class="pagination mt-5">
+            <span class="step-links">
+              {% if dsn.has_previous %}
+                <a href="?page=1">&laquo; first</a>
+                <a href="?page={{ dsn.previous_page_number }}">previous</a>
+              {% endif %}
+
+              <span class="current">
+                Page {{ dsn.number }} of {{ dsn.paginator.num_pages }}.
+              </span>
+
+              {% if dsn.has_next %}
+                <a href="?page={{ dsn.next_page_number }}">next</a>
+                <a href="?page={{ dsn.paginator.num_pages }}">last &raquo;</a>
+              {% endif %}
+            </span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+{% endblock %}

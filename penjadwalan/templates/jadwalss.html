@@ -1,0 +1,115 @@
+{% extends 'base.html' %}
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Jadwal</title>
+
+    <!-- feather icon -->
+
+    <script src="https://unpkg.com/feather-icons"></script>
+
+    <!-- css -->
+    <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %} " />
+    <link rel="stylesheet" href="{% static 'css/style.css' %}" />
+  </head>
+  <body>
+    <div class="container">
+    <div class="row">
+      <div class="col-md-12">
+        <h3>Jadwal Matakuliah LAB ICT
+          <a href="{% url 'tambah_jadwal' %}" class="btn btn-primary">Tambah</a>
+          <a href="{% url 'dosen' %}"class="btn btn-warning">Dosen</a>
+          <a href="{% url 'matkul' %}"class="btn btn-success">Matakuliah</a>
+          <a href="{% url 'ruangan' %}"class="btn btn-danger">Ruangan</a>
+        </h3>
+        <span class="input-group-text" id="search-addon">
+          <i data-feather="search"></i>
+        </span>
+      </div>
+      <div>
+        <a href="../CRUD/tambah.html" class="text-decoration-none"
+          ><button
+            type="button"
+            class="btn btn-primary btn-sm mb-3"
+            style="font-style: italic"
+          >
+            <i
+              data-feather="plus"
+              class="icon-tambah me-1"
+              style="height: 20"
+            ></i>
+            Add Jadwal
+          </button>
+        </a>
+      </div>
+
+      <div>
+        <table class="table table-bordered table-striped custom-table">
+          <!-- field -->
+          <thead>
+            <tr>
+              <th>Waktu</th>
+              <th>MataKuliah</th>
+              <th>Dosen</th>
+              <th>Ruangan</th>
+              <th>Action</th>
+            </tr>
+          </thead>
+          <tbody>
+            <!-- {% for buku in books %} -->
+            <tr>
+              <td>afnav</td>
+              <td>hoehoe</td>
+              <td>asdsa</td>
+              <td>ads</td>
+              <td>
+                <a href="/CRUD/update.html" class="text-decoration-none"
+                  ><button type="button" class="btn btn-primary btn-sm me-3">
+                    Update
+                     </button></a
+                >
+
+                <button type="button" class="btn btn-danger btn-sm">
+                  Delete
+                </button>
+              </td>
+            </tr>
+            <!-- {% endfor %} -->
+          </tbody>
+        </table>
+      </div>
+
+      <div>
+        <div class="text-center text-lg-start mt-4 pt-2">
+          <a href="home.html" class=" target="_top">
+            <button
+              type="button"
+              class="btn btn-success btn-lg me-3"
+              style="padding-left: 2.5rem; padding-right: 2.5rem"
+            >
+              Save
+            </button>
+
+          </a>
+          <a href="../home.html">
+            <button
+            type="button"
+            class="btn btn-danger btn-lg"
+            style="padding-left: 2.5rem; padding-right: 2.5rem"
+          >
+            Back
+          </button>
+        </div>   
+        </div>
+      </a>
+      </div>
+    </div>
+    <script>
+      feather.replace();
+    </script>
+  </body>
+</html>

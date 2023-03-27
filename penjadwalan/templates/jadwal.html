@@ -1,0 +1,89 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+  <div class="container">
+    <div class="row">
+      <div class="col-md-12">
+        
+        <h3>Jadwal Matakuliah LAB ICT
+          
+          <a href="{% url 'tambah_jadwal' %}" class="btn btn-primary">Tambah</a>
+          <a href="{% url 'dosen' %}"class="btn btn-warning">Dosen</a>
+          <a href="{% url 'matkul' %}"class="btn btn-success">Matakuliah</a>
+          <a href="{% url 'ruangan' %}"class="btn btn-danger">Ruangan</a>
+        </h3>
+          {% for message in messages %}
+            {% if message %}
+              <div class="alert alert-success">{{ message }}</div>
+            {% endif %}
+          {% endfor %}
+        <table class="table table-bordered table-striped">
+          
+          <thead>
+            <tr>
+              <th>Hari</th>
+              <th>Waktu</th>
+              <th>Matakuliah</th>
+              <th>Dosen</th>
+              <th>Ruangan</th>
+              <th>Action</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for jadwal in jdwl %}
+            <tr>
+              <td><a href="{% url 'ubah_jadwal' jadwal.id %}">{{jadwal.hari}}</a></td>
+              <td>{{jadwal.waktu}}</td>
+              <td>{{jadwal.matkul_id}}</td>
+              <td>{{jadwal.dosen_id}}</td>
+              <td>{{jadwal.lab_id}}</td>
+              <td><button data-bs-toggle="modal" data-bs-target="#hapus-{{ jadwal.id }}">Hapus</button></td>
+              <div class="modal" id="hapus-{{ jadwal.id }}">
+                <div class="modal-dialog">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <div class="modal-title">
+                        <h3>Hapus</h3>
+                      </div>
+                    </div>
+                    <div class="modal-body">
+                      Apakah anda yakin akan menghapus matakuliah <strong>{{ jadwal.matkul_id }}</strong> pada tanggal 
+                      <strong>{{jadwal.tanggal}} </strong>pukul <strong>{{jadwal.waktu}} </strong> yang diajar oleh 
+                      <strong>{{jadwal.dosen_id}} </strong>di ruangan <strong>{{jadwal.lab_id}} </strong> ?
+                    </div>
+                    <div class="modal-footer">
+                      <a href="{% url 'hapus_jadwal' jadwal.id %}" class="btn btn-danger">Hapus</a>
+                      <button class="btn btn-dark" data-bs-dismiss="modal">Tidak</button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+        <div class="container mt-5 mb-5">
+          <div class="pagination mt-5">
+            <span class="step-links">
+              {% if jdwl.has_previous %}
+                <a href="?page=1">&laquo; first</a>
+                <a href="?page={{ jdwl.previous_page_number }}">previous</a>
+              {% endif %}
+
+              <span class="current">
+                Page {{ jdwl.number }} of {{ jdwl.paginator.num_pages }}.
+              </span>
+
+              {% if jdwl.has_next %}
+                <a href="?page={{ jdwl.next_page_number }}">next</a>
+                <a href="?page={{ jdwl.paginator.num_pages }}">last &raquo;</a>
+              {% endif %}
+            </span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+{% endblock %}

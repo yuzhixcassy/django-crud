@@ -1,0 +1,77 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+  <div class="container">
+    <div class="row">
+      <div class="col-md-12">
+        <h3>Daftar Matakuliah
+          <a href="{% url 'jadwal' %}" class="btn btn-danger">back</a>
+          <a href="{% url 'tambah_ruangan' %}" class="btn btn-primary">Tambah</a>
+        </h3>
+          {% for message in messages %}
+            {% if message %}
+              <div class="alert alert-success">{{ message }}</div>
+            {% endif %}
+          {% endfor %}
+        <table class="table table-bordered table-striped">
+          
+          <thead>
+            <tr>
+              <th>LAB</th>
+              <th>Keterangan</th>
+              <th>ACTION</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for ruangan in rngn %}
+            <tr>
+              <td><a href="{% url 'ubah_ruangan' ruangan.id %}">{{ruangan.lab}}</a></td>
+              <td>{{ruangan.keterangan}}</td>
+              <td><button data-toggle="modal" data-target="#hapus-{{ ruangan.id }}">Hapus</button></td>
+              <div class="modal" id="hapus-{{ ruangan.id }}">
+                <div class="modal-dialog">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <div class="modal-title">
+                        <h3>Hapus</h3>
+                      </div>
+                    </div>
+                    <div class="modal-body">
+                      Apakah anda yakin akan menghapus <strong>{{ ruangan.lab }}</strong> ?
+                    </div>
+                    <div class="modal-footer">
+                      <a href="{% url 'hapus_ruangan' ruangan.id %}" class="btn btn-danger">Hapus</a>
+                      <button class="btn btn-dark" data-dismiss="modal">Tidak</button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+        <div class="container mt-5 mb-5">
+          <div class="pagination mt-5">
+            <span class="step-links">
+              {% if rngn.has_previous %}
+                <a href="?page=1">&laquo; first</a>
+                <a href="?page={{ rngn.previous_page_number }}">previous</a>
+              {% endif %}
+
+              <span class="current">
+                Page {{ rngn.number }} of {{ rngn.paginator.num_pages }}.
+              </span>
+
+              {% if rngn.has_next %}
+                <a href="?page={{ rngn.next_page_number }}">next</a>
+                <a href="?page={{ rngn.paginator.num_pages }}">last &raquo;</a>
+              {% endif %}
+            </span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+{% endblock %}
